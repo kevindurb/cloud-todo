@@ -15,7 +15,11 @@ const config: Configuration = {
   module: {
     rules: [{ test: /\.ts$/, loader: 'ts-loader' }],
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
+    }),
+  ],
 };
 
 export default config;
