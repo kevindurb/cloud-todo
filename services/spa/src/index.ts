@@ -1,7 +1,7 @@
-import 'reflect-metadata';
-import Container from 'typedi';
-import { App } from './App';
+import App from './App.svelte';
 
-const app = Container.get(App);
+const app = new App({
+  target: document.getElementById('root'), // entry point in ../public/index.html
+});
 
-app.show();
+export default app;

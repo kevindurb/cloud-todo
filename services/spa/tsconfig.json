@@ -1,8 +1,5 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
-  "compilerOptions": {
-    "lib": ["DOM"],
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*"]
 }

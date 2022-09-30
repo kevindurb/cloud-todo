@@ -1,8 +1,8 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Configuration } from 'webpack';
 import path from 'path';
+import type { Configuration } from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const config: Configuration = {
+const configuration: Configuration = {
   mode: 'production',
   entry: './src/index.ts',
   output: {
@@ -10,16 +10,32 @@ const config: Configuration = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.ts', '.js'],
-  },
-  module: {
-    rules: [{ test: /\.ts$/, loader: 'ts-loader' }],
+    alias: {
+      svelte: path.dirname(require.resolve('svelte/package.json')),
+    },
+    extensions: ['.mjs', '.js', '.svelte', '.ts'],
+    mainFields: ['svelte', 'browser', 'module', 'main'],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/index.html'),
     }),
   ],
+  module: {
+    rules: [
+      { test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/ },
+      {
+        test: /\.svelte$/,
+        loader: 'svelte-loader',
+      },
+      {
+        test: /node_modules\/svelte\/.*\.mjs$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+    ],
+  },
 };
 
-export default config;
+export default configuration;
